@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados históricos e Forecast!</title>
+</head>
+<body>
+    <h1>Dados Históricos! (e futuros)</h1>
+
+    <form method="post">
+        <label for="coin">Escolha uma moeda:</label>
+        <select name="coin" id="coin">
+            <option value="bitcoin">Bitcoin</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="dogecoin">Dogecoin</option>
+            <option value="cardano">Cardano</option>
+            <option value="solana">Solana</option>
+        </select>
+
+        <label for="currency">Escolha a moeda de cotação:</label>
+        <select name="currency" id="currency">
+            <option value="usd">Dólar Americano</option>
+            <option value="eur">Euro</option>
+            <option value="brl">Real Brasileiro</option>
+        </select>
+
+        <label for="time_back">Escolha o número de dias anteriores:</label>
+        <select name="time_back" id="time_back">
+            <option value="3">3</option>
+            <option value="7">7</option>
+            <option value="14">14</option>
+            <option value="21">21</option>
+            <option value="30">30</option>
+            <option value="90">90 (aproximadamente 3 meses)</option>
+            <option value="180">180 (aproximadamente 6 meses)</option>
+            <option value="365">365 (1 ano)</option>
+        </select>
+        <input type="submit" value="Obter Informações!">
+    </form>
+
+    <br>
+    <h1>Gráfico com dados históricos:</h1>
+    <img src="data:image/png;base64,{{ img_base64 }}" alt="img_base64">
+    <br>
+
+    <br>
+    <h1>Previsão dos próximos {{ n_dias }} dias:</h1>
+    <img src="data:image/png;base64,{{ img_2 }}" alt="img_2">
+    <br>
+
+</body>
+</html>
