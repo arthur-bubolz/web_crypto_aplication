@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+from flask_socketio import SocketIO
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 from io import BytesIO
@@ -10,6 +11,8 @@ from pycoingecko import CoinGeckoAPI
 import pandas as pd
 
 app = Flask(__name__)
+
+socketio = SocketIO(app,async_mode='threading')
 
 cg = CoinGeckoAPI()
 print(cg.ping())
@@ -138,4 +141,4 @@ def historical_data():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app)
