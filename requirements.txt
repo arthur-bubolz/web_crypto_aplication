@@ -1,3 +1,4 @@
+bidict==0.22.1
 blinker==1.6.2
 certifi==2023.7.22
 charset-normalizer==3.2.0
@@ -8,7 +9,10 @@ convertdate==2.4.0
 cycler==0.11.0
 ephem==4.1.4
 Flask==2.3.3
+Flask-SocketIO==5.3.6
 fonttools==4.42.1
+gunicorn==21.2.0
+h11==0.14.0
 holidays==0.32
 idna==3.4
 importlib-resources==6.0.1
@@ -27,10 +31,16 @@ pycoingecko==3.1.0
 PyMeeus==0.5.12
 pyparsing==3.0.9
 python-dateutil==2.8.2
+python-engineio==4.7.1
+python-socketio==5.9.0
 pytz==2023.3.post1
 requests==2.31.0
+simple-websocket==0.10.1
 six==1.16.0
 tqdm==4.66.1
+typing_extensions==4.8.0
 tzdata==2023.3
 urllib3==2.0.4
+uvicorn==0.23.2
 Werkzeug==2.3.7
+wsproto==1.2.0
