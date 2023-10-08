@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 from prophet import Prophet
+from markupsafe import Markup
 
 # bibliotecas da APIs
 from pycoingecko import CoinGeckoAPI
@@ -21,27 +22,47 @@ print(cg.ping())
 @app.route('/', methods=['GET', 'POST'])
 def infos():
     if request.method == 'POST':
-        coin_selected = request.form['coin']
+        form_name = request.form.get('form_type')
+        print(form_name)
+        if form_name == 'Obter Informações!':
+            coin_selected = request.form['coin']
+            
+            # VS currencies
+            vsCurrencies = ['usd', 'eur', 'brl']
+
+            # Requisição de últimas informações da crypto selecionada
+            complexPriceRequest = cg.get_price(ids=coin_selected,
+                                vs_currencies=vsCurrencies,
+                                include_market_cap=True,
+                                include_24hr_vol=True,
+                                include_24hr_change=True,
+                                include_last_updated_at=True)
+            
+            # Transforme o JSON em um DataFrame
+            df = pd.DataFrame.from_dict(complexPriceRequest, orient='index')
+
+            # Transponha o DataFrame para que as moedas se tornem índices
+            df = df.transpose()
+
+            return render_template('index.html', selected_coin=coin_selected, tables = df.to_html(escape=False), titles=df.columns.values)
         
-        # VS currencies
-        vsCurrencies = ['usd', 'eur', 'brl']
+        elif form_name == 'Obter Conversão!':
+            coin_selected_1_in = request.form['coin_1']
+            coin_selected_2_out = request.form['coin_2']
+            
+            vsCurrencies = ['usd']
+            request_base = cg.get_price(ids = coin_selected_1_in, vs_currencies = vsCurrencies)[coin_selected_1_in]['usd']
+            request_out = cg.get_price(ids = coin_selected_2_out, vs_currencies = vsCurrencies)[coin_selected_2_out]['usd']
+            
+            output_value = request_base/request_out
+            
+            # Sua tag HTML aqui
+            tag_html = f"<div><p>1 unidade de {coin_selected_1_in} compra: {output_value} de {coin_selected_2_out}</p></div>"
 
-        # Requisição de últimas informações da crypto selecionada
-        complexPriceRequest = cg.get_price(ids=coin_selected,
-                            vs_currencies=vsCurrencies,
-                            include_market_cap=True,
-                            include_24hr_vol=True,
-                            include_24hr_change=True,
-                            include_last_updated_at=True)
-        
-        # Transforme o JSON em um DataFrame
-        df = pd.DataFrame.from_dict(complexPriceRequest, orient='index')
-
-        # Transponha o DataFrame para que as moedas se tornem índices
-        df = df.transpose()
-
-        return render_template('index.html', selected_coin=coin_selected, tables=[df.to_html(classes='data')], titles=df.columns.values)
-
+            # Marque a tag HTML como segura para renderização
+            safe_html = Markup(tag_html)
+            
+            return render_template('index.html', safe_html=safe_html)            
     # Se for um GET ou a primeira renderização, apenas exiba a página sem informações.
     return render_template('index.html')
 
@@ -141,4 +162,4 @@ def historical_data():
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+    socketio.run(app, debug=True)

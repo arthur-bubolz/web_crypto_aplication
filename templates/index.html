@@ -3,33 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <title>Infos Atuais!</title>
 </head>
 <body>
-    <h1>Informações Atuais</h1>
-    
-    <form method="post">
-        <label for="coin">Escolha uma moeda:</label>
-        <select name="coin" id="coin">
-            <option value="bitcoin">Bitcoin</option>
-            <option value="ethereum">Ethereum</option>
-            <option value="dogecoin">Dogecoin</option>
-            <option value="cardano">Cardano</option>
-            <option value="solana">Solana</option>
-        </select>
-        <input type="submit" value="Obter Informações!">
-    </form>
-    
-    <br>
-    <!-- Exibir informações selecionadas aqui -->
-    {% for table in tables %}
-            {{titles[loop.index]}}
-            {{ table|safe }}
-    {% endfor %}
-    <br>
+    <div id="main_infos" class="main_infos">
+        <h1>Informações Atuais</h1>
+
+                <form method="post">
+                    <label for="coin">Escolha uma moeda:</label>
+                    <select name="coin" id="coin">
+                        <option value="bitcoin">Bitcoin</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="dogecoin">Dogecoin</option>
+                        <option value="cardano">Cardano</option>
+                        <option value="solana">Solana</option>
+                    </select>
+                    <input type="submit" name="form_type" value="Obter Informações!">
+                </form>
+
+                <br>
+                <!-- Exibir informações selecionadas aqui -->
+                {{ tables|safe }}
+                <br><br>
+
+                <div id="item_2">
+                    <form method="post">
+                        <label for="coin_1">Escolha moeda base para conversão:</label>
+                        <select name="coin_1" id="coin_1">
+                            <option value="bitcoin">Bitcoin</option>
+                            <option value="ethereum">Ethereum</option>
+                            <option value="dogecoin">Dogecoin</option>
+                            <option value="cardano">Cardano</option>
+                            <option value="solana">Solana</option>
+                        </select>
+                        <label for="coin_2">Escolha moeda para comparação:</label>
+                        <select name="coin_2" id="coin_2">
+                            <option value="bitcoin">Bitcoin</option>
+                            <option value="ethereum">Ethereum</option>
+                            <option value="dogecoin">Dogecoin</option>
+                            <option value="cardano">Cardano</option>
+                            <option value="solana">Solana</option>
+                        </select>
+                        <br><br>
+                        <input type="submit" name="form_type" value="Obter Conversão!">
+                    </form>   
+                    <br>
+                    {{ safe_html|safe }}
+                    <br>     
+                </div> 
+                <br>      
+    </div>
 
     <!-- botão: exibir dados históricos (redirecionar) -->
-    <p align="center"><a href=historical_data ><button class=grey style="height:75px;width:150px">Verificar Dados Históricos!</button></a></p>
+    <p align="center"><a href=historical_data ><button class="grey" style="height:75px;width:150px">Verificar Dados Históricos!</button></a></p>
 
 </body>
 </html>
