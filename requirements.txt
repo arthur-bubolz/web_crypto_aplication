@@ -35,3 +35,4 @@ tzdata==2023.3
 urllib3==2.0.4
 Werkzeug==2.2.3
 uvicorn==0.22.0
+gunicorn==21.2.0
