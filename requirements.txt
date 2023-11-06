@@ -34,3 +34,4 @@ tqdm==4.66.1
 tzdata==2023.3
 urllib3==2.0.4
 Werkzeug==2.2.3
+uvicorn==0.22.0
